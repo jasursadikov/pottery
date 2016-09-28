@@ -18,9 +18,10 @@ namespace Pottery
 		/// <summary>
 		/// Vertex.
 		/// </summary>
-		public Vertex(Vector3 position, int index)
+		public Vertex(Vector3 position, Vector3 normal, int index)
 		{
 			this.position = position;
+			this.normal = normal;
 			this.index = index;
 		}
 
@@ -28,6 +29,11 @@ namespace Pottery
 		/// Vertex position in space.
 		/// </summary>
 		public Vector3 position;
+
+		/// <summary>
+		/// Vertex normal.
+		/// </summary>
+		public Vector3 normal;
 
 		/// <summary>
 		/// Index in mesh.

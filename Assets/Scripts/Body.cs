@@ -8,6 +8,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace Pottery
 {
@@ -21,43 +22,101 @@ namespace Pottery
 		/// <summary>
 		/// Body. Contains mesh data.
 		/// </summary>
-		public Body(int x, int y, int heightSegments, int faces)
+		public Body(int x, int y, float height)
 		{
 			// Constructor validation.
-			if (x <= 1 || y <= 1 || heightSegments <= 1 || faces <= 3)
+			if (x <= 1 || y <= 1)
 				throw new IndexOutOfRangeException();
-
 			// Creating an instance of matrix.
-			_vertices = new Vertex[x,y];
-
-			_radius = new float[heightSegments];
+			vertices = new Vertex[x,y];
+			radius = new float[y];
+			this.height = height;
+			x++;
 
 			// Setting minimal radius.
-			for (int index = 0; index < _radius.Length; index++)
-				_radius[index] = 1;
+			for (int index = 0; index < radius.Length; index++)
+				radius[index] = 1f;
 		}
 
 		/// <summary>
 		/// Vertices.
 		/// </summary>
 		[DataMember]
-		private readonly Vertex[,] _vertices;
+		public readonly Vertex[,] vertices;
 
 		/// <summary>
 		/// Radius of each segment.
 		/// </summary>
 		[DataMember]
-		private readonly float[] _radius;
+		public readonly float[] radius; // TODO: encapsulate array
 
 		/// <summary>
-		/// Count of vertical faces.
+		/// Distance between two height segments.
 		/// </summary>
 		[DataMember]
-		private readonly int _faces;
+		public readonly float height;
 
 		/// <summary>
 		/// Count of HeightSegments.
 		/// </summary>
-		public int HeightSegments { get { return _radius.Length; } }
+		public int HeightSegments { get { return vertices.GetLength(1); } }
+
+		/// <summary>
+		/// Faces.
+		/// </summary>
+		public int Faces { get { return vertices.GetLength(0); } }
+		
+		/// <summary>
+		/// Updating all vertices. Generating by radius.
+		/// </summary>
+		public void UpdateVertices()
+		{
+			for (int i = 0, y = 0; y < vertices.GetLength(1); y++)
+				for (int x = 0; x < vertices.GetLength(0); i++, x++)
+				{
+					float posX = Mathf.Cos(Mathf.PI * 2f / (Faces - 1) * x);
+					float posY = y * height;
+					float posZ = Mathf.Sin(Mathf.PI * 2f / (Faces - 1) * x);
+
+					Vector3 position = new Vector3(posX * radius[y], posY, posZ * radius[y]);
+					Vector3 normal = new Vector3(posX * (radius[y] + 1), 0, posZ * (radius[y] + 1));
+
+					vertices[x,y] = new Vertex(position, normal, i);
+				}
+		}
+
+		/// <summary>
+		/// Converting vertices to Vector3 array.
+		/// </summary>
+		/// <returns>Converted vertices array.</returns>
+		public Vector3[] VerticesToPositionArray()
+		{
+			Vector3[] result = new Vector3[HeightSegments * Faces];
+			for (int i = 0, y = 0; y < vertices.GetLength(1); y++)
+				for (int x = 0; x < vertices.GetLength(0); i++, x++)
+				{
+					var vertex = vertices[x, y];
+					result[i] = vertex.position;
+				}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Converting vertices to Vector3 array.
+		/// </summary>
+		/// <returns>Converted vertices array.</returns>
+		public Vector3[] VerticesToNormalsArray()
+		{
+			Vector3[] result = new Vector3[HeightSegments * Faces];
+			for (int i = 0, y = 0; y < vertices.GetLength(1); y++)
+				for (int x = 0; x < vertices.GetLength(0); i++, x++)
+				{
+					var vertex = vertices[x, y];
+					result[i] = vertex.normal;
+				}
+
+			return result;
+		}
 	}
 }

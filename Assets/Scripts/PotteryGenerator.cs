@@ -54,8 +54,21 @@ namespace Pottery
 		/// Mesh.
 		/// </summary>
 		private Mesh _mesh;
-
+		
 		private void Start()
+		{
+			Assemble();
+		}
+
+		private void Update()
+		{
+			Generate();
+		}
+
+		/// <summary>
+		/// Assemble basic components.
+		/// </summary>
+		public void Assemble()
 		{
 			_mesh = new Mesh();
 			_mesh.Clear();
@@ -67,12 +80,7 @@ namespace Pottery
 			{
 				body.radius[index] = defaultRadius;
 			}
-			_mesh = new Mesh {name = "Procedural mesh"};
-		}
-
-		private void Update()
-		{
-			Generate();
+			_mesh = new Mesh { name = "Procedural mesh" };
 		}
 
 		/// <summary>

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Pottery.Demo
 {
@@ -6,11 +8,14 @@ namespace Pottery.Demo
 	{
 		public new MeshRenderer renderer;
 
+		public Dropdown dropdown;
+
 		public Material[] materials;
 
-		public void SetMaterial(int index)
+		public void SetMaterial()
 		{
-			renderer.sharedMaterial = materials[index];
+			int i = dropdown.value;
+			renderer.sharedMaterial = materials[i];
 		}
 	}
 }

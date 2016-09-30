@@ -106,9 +106,20 @@ namespace Pottery
 					triangles[t++] = body.vertices[x + 1, y].index;
 				}
 
-			_mesh.normals = body.VerticesToNormalsArray();
+			Vector2[] uvs = new Vector2[body.vertices.GetLength(0) * body.vertices.GetLength(1)];
 
+			for (int t = 0, y = 0; y < body.vertices.GetLength(1); y++)
+				for (int x = 0; x < body.vertices.GetLength(0); x++, t++)
+				{
+					float uvX = 1f/body.vertices.GetLength(0) * x;
+					float uvY = 1f / body.vertices.GetLength(1) * y;
+
+					uvs[t] = new Vector2(uvX, uvY);
+				}
+
+			_mesh.normals = body.VerticesToNormalsArray();
 			_mesh.triangles = triangles;
+			_mesh.uv = uvs;
 
 			Filter.mesh = _mesh;
 

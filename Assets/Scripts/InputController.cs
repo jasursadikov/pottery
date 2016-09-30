@@ -34,23 +34,22 @@ namespace Pottery
 		{
 			Vector3 prevPosition = _hit.point;
 
-#if UNITY_EDITOR
+#if UNITY_ANDROID
+			if (Input.touchCount == 0)
+			{
+				_isEnabled = false;
+				return;
+			}
+			_ray = camera.ScreenPointToRay(Input.touches[0].position);
+#else
+			_ray = camera.ScreenPointToRay(Input.mousePosition);
 			if (!Input.GetMouseButton(0))
 			{
 				_isEnabled = false;
 				return;
 			}
-
-			_ray = camera.ScreenPointToRay(Input.mousePosition);
-#else
-			if (Input.touchCount == 0)
-			{
-				isEnabled = false;
-				return;
-			}
-
-			_ray = camera.ScreenPointToRay(Input.touches[0].position);			
 #endif
+
 			if (Physics.Raycast(_ray, out _hit))
 			{
 				float dir = _isEnabled ? _hit.point.x - prevPosition.x : 0;
@@ -59,7 +58,7 @@ namespace Pottery
 				{
 					for (int i = 0; i < pottery.heightSegments; i++)
 					{
-						if (_hit.point.y > i*pottery.height - pottery.height / 2&& _hit.point.y < (i + 1)*pottery.height - pottery.height / 2)
+						if (_hit.point.y > i*pottery.height - pottery.height/2 && _hit.point.y < (i + 1)*pottery.height - pottery.height/2)
 						{
 							_selectedSegment = i;
 							break;
@@ -68,7 +67,18 @@ namespace Pottery
 					_isEnabled = true;
 				}
 
-				pottery.body.radius[_selectedSegment] += dir;
+				if ((dir < 0 && pottery.body.radius[_selectedSegment] > 0.1f) ||
+				    (dir > 0 && pottery.body.radius[_selectedSegment] < 1.25f))
+				{
+					pottery.body.radius[_selectedSegment] += dir;
+					pottery.body.radius[_selectedSegment] = pottery.body.radius[_selectedSegment] > 0.1f
+						? pottery.body.radius[_selectedSegment]
+						: 0.1f;
+
+					pottery.body.radius[_selectedSegment] = pottery.body.radius[_selectedSegment] < 1.25f
+						? pottery.body.radius[_selectedSegment]
+						: 0.125f;
+				}
 				return;
 			}
 

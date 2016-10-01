@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿// Licensed under GPLv3 license or under special license
+// See the LICENSE file in the project root for more information
+// -----------------------------------------------------------------------
+// Author: Plastic Block <admin@plasticblock.xyz>
+// Skype: plasticblock, email: support@plasticblock.xyz
+// Project: Pottery. (https://github.com/PlasticBlock/Pottery)
+// ----------------------------------------------------------------------- 
+
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Pottery.Demo
@@ -25,21 +33,21 @@ namespace Pottery.Demo
 
 		public void SetFaces()
 		{
-			generator.faces = (int) faces.value;
+			generator.Faces = (int) faces.value;
 			facesText.text = string.Format("Faces: {0}", (int) faces.value);
 			generator.Assemble();
 		}
 		
 		public void SetHeightSegments()
 		{
-			generator.heightSegments = (int) heightSegments.value;
+			generator.HeightSegments = (int) heightSegments.value;
 			heightSegmentsText.text = string.Format("Height Segments: {0}", (int)heightSegments.value);
 			generator.Assemble();
 		}
 
 		public void SetHieght()
 		{
-			generator.height = height.value;
+			generator.Height = height.value;
 			hieghtText.text = string.Format("Height: {0}", height.value);
 			generator.Assemble();
 		}

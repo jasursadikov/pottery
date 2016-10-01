@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Licensed under GPLv3 license or under special license
+// See the LICENSE file in the project root for more information
+// -----------------------------------------------------------------------
+// Author: Plastic Block <admin@plasticblock.xyz>
+// Skype: plasticblock, email: support@plasticblock.xyz
+// Project: Pottery. (https://github.com/PlasticBlock/Pottery)
+// ----------------------------------------------------------------------- 
+
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 

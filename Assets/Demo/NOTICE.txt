@@ -1,0 +1,8 @@
+Files in Texture folder, DO NOT covered by GPL-3.0 LICENSE.
+This files are downloaded from 3rd party source and may be covered
+by another license.
+
+Links to the source of the provided files:
+
+Textures/Scratches/ - https://www.filterforge.com/forum/read.php?TID=8246
+Textures/textures.com/ - http://www.textures.com/

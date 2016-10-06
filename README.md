@@ -4,8 +4,8 @@
 <b>Pottery</b> is runtime pottery editing engine, developed using C#, for Unity3D.
 
 By Plastic Block.
-Demo:
-Mesh structure:
+####Demo: <a href="https://plasticblock.herokuapp.com/apps/pottery/index.html">WebGL Demo</a>.
+<br>Mesh structure:
 <p align="left"><img src="http://i.imgur.com/qRERXNa.png"></p>
 Pottery editing example:
 <p align="left"><img src="http://i.imgur.com/gtSCcjU.gif"></p>

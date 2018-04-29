@@ -13,7 +13,7 @@ Changing height and faces count.
 Read XML documentation inside source code files, for more information.
 
 ### CONTACT:
-<br>Skype: plasticblock.
+<br>website: http://plasticblock.xyz.
 <br>E-mail: contact@plasticblock.xyz.
 
 ### LICENSE:

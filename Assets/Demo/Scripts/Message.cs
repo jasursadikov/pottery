@@ -1,46 +1,47 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: Plastic Block <admin@plasticblock.xyz>
-// Skype: plasticblock, email: support@plasticblock.xyz
-// Project: Pottery. (https://github.com/PlasticBlock/Pottery)
+// Author: plasticblock
+// Skype: plasticblock, email: contact@plasticblock.xyz
+// Project: Pottery. (https://github.com/plasticblock/Pottery)
 // ----------------------------------------------------------------------- 
+
+// NOTE: placeholder script for Demo
 
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pottery.Demo
+namespace PlasticBlock.Pottery.Demo
 {
 	public sealed class Message : MonoBehaviour
 	{
-		private static Message _instance;
+		public static Message Instance { get; private set; }
 
-		public static Message GetInstance()
+		[SerializeField]
+		private Text _message;
+
+		private Action _onClose = delegate { };
+
+		private void Awake()
 		{
-			if (_instance == null) throw new NullReferenceException();
-			return _instance;
+			Instance = this;
 		}
 
-		public Text message;
-
-		private void Awake() { _instance = this; }
-
-		private Action onClose = delegate { };
-
-		public void PopUp(string message, Action onClose)
+		public void PopUp(string message, Action onClose = null)
 		{
-			CanvasController.GetInstance().ShowElement(3);
-			this.message.text = message;
-			this.onClose = onClose;
+			onClose = onClose ?? delegate { };
+			CanvasController.Instance.ShowElement(3);
+			_message.text = message;
+			_onClose = onClose;
 		}
 
 		public void Close()
 		{
-			CanvasController.GetInstance().Back();
-			message.text = "Null";
-			onClose();
-			onClose = delegate { };
+			CanvasController.Instance.Back();
+			_message.text = "Null";
+			_onClose();
+			_onClose = delegate { };
 		}
 	}
 }

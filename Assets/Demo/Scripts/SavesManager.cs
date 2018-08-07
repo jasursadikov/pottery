@@ -1,71 +1,61 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: Plastic Block <admin@plasticblock.xyz>
-// Skype: plasticblock, email: support@plasticblock.xyz
-// Project: Pottery. (https://github.com/PlasticBlock/Pottery)
+// Author: plasticblock
+// Skype: plasticblock, email: contact@plasticblock.xyz
+// Project: Pottery. (https://github.com/plasticblock/Pottery)
 // ----------------------------------------------------------------------- 
+
+// NOTE: placeholder script for Demo
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Pottery.Demo
+namespace PlasticBlock.Pottery.Demo
 {
 	public sealed class SavesManager : MonoBehaviour
 	{
-		public PotteryGenerator generator;
+		[SerializeField]
+		private PotteryGenerator _generator;
 
-		public InputField fileName;
+		[SerializeField]
+		private InputField _fileName;
 
-		public IDictionary<string, Body> bodies;
+		[SerializeField]
+		private Dropdown _selection;
 
-		public Dropdown selection;
+		private IDictionary<string, MeshData> _bodies;
 
-		private void Start()
-		{
-			LoadAll();
-		}
+		private void Start() => LoadAll();
 
 		private void LoadAll()
 		{
-			selection.ClearOptions();
+			_selection.ClearOptions();
 
-			bodies = new Dictionary<string, Body>();
+			_bodies = new Dictionary<string, MeshData>();
 
 			foreach (string path in Directory.GetFiles(Application.persistentDataPath))
 			{
-				XmlSerializer serializer = new XmlSerializer(typeof(Body));
-
-				string name = Path.GetFileName(path).Replace(".dat", "");
-
-				Body body = null;
-
-				using (FileStream stream = File.OpenRead(path))
-				{
-					body = (Body) serializer.Deserialize(stream);
-					bodies.Add(name, body);
-				}
-
-				body.vertices = new Vertex[body.faces, body.heightSegments];
-				body.UpdateVertices();
+				var body = JsonUtility.FromJson<MeshData>(File.ReadAllText(path));
+				_bodies.Add(Path.GetFileNameWithoutExtension(path), body);
 			}
-			selection.AddOptions(bodies.Keys.ToList());
+
+			_selection.AddOptions(_bodies.Keys.ToList());
 		}
 
 		public void Load()
 		{
 			try
 			{
-				generator.body = bodies.ElementAt(selection.value).Value;
+				_generator.meshData = _bodies.ElementAt(_selection.value).Value;
 			}
 			catch
 			{
-				Message.GetInstance().PopUp("You have nothing to load", delegate { });
+				Message.Instance.PopUp("You have nothing to load");
 			}
 		}
 
@@ -74,40 +64,35 @@ namespace Pottery.Demo
 			try
 			{
 				foreach (string path in Directory.GetFiles(Application.persistentDataPath))
-					if (bodies.ElementAt(selection.value).Key == Path.GetFileName(path).Replace(".dat", ""))
+					if (_bodies.ElementAt(_selection.value).Key == Path.GetFileName(path).Replace(".json", ""))
 					{
 						File.Delete(path);
 						break;
 					}
 			}
-			catch (Exception)
+			catch (Exception exception)
 			{
-				Message.GetInstance().PopUp("Oops! Something went wrong...", delegate { });
+				Message.Instance.PopUp($"Oops!\n{exception.Message}");
 			}
+
 			LoadAll();
 		}
 
 		public void Save()
 		{
-			try
+
+			if (string.IsNullOrEmpty(_fileName.text))
 			{
-				if (string.IsNullOrEmpty(fileName.text))
-					throw new NullReferenceException();
-
-				XmlSerializer serializer = new XmlSerializer(typeof(Body));
-
-				using (FileStream stream = File.Create(Path.Combine(Application.persistentDataPath, fileName.text + ".dat")))
-					serializer.Serialize(stream, generator.body);
-
-				LoadAll();
-
-				Message.GetInstance().PopUp("Saved successfully.", delegate { });
+				Message.Instance.PopUp("File name is empty.");
+				return;
 			}
-			catch (Exception exception)
-			{
-				if (exception is NullReferenceException)
-					Message.GetInstance().PopUp("You should write down the name.", delegate { });
-			}
+
+			var path = Path.Combine(Application.persistentDataPath, _fileName.text + ".json");
+			File.WriteAllText(path, JsonUtility.ToJson(_generator.meshData));
+
+			LoadAll();
+
+			Message.Instance.PopUp("Saved successfully.");
 		}
 	}
 }

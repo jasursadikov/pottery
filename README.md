@@ -23,4 +23,4 @@ Licensed under GPLv3 license or under special license.
 
 ---
 
-<p align="center">Pottery Copyright (C) 2018 Jasur "plasticblock" Sadikov</p>
+<p align="center">Pottery Copyright (C) 2019 Jasur "vmp1r3" Sadikov</p>

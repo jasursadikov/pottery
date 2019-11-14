@@ -2,8 +2,6 @@
 
 <b>Pottery</b> is runtime pottery editing engine, developed using C# and Unity3D.
 
-<b>Demo: <a href="">Windows x86_64</a></b> 
-
 Objects created using Pottery engine: 
 <p align="left"><img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300></p>
 Sample object mesh structure:
@@ -19,8 +17,4 @@ Website: <a href="http://plasticblock.xyz/">plasticblock.xyz</a>
 
 ###### LICENSE
 Licensed under GPLv3 license or under special license.
-<br>See the LICENSE file in the project root for more information.
-
----
-
-<p align="center">Pottery Copyright (C) 2019 Jasur "vmp1r3" Sadikov</p>
+<br>See the LICENSE file in the project root for futher information.

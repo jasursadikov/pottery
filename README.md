@@ -17,14 +17,20 @@ Read XML documentation included in source code files, for further information.
 
 #### Example
 Result
+<p>
 <img src="http://plasticblock.xyz/projects/pottery/example.png" height=300>
 <img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300>
+</p>
 
 Mesh structure
+<p>
 <img src="http://plasticblock.xyz/projects/pottery/meshStructure.png" height=300>
+</p>
 
 Pottery Demo editing example
+<p>
 <img src="http://plasticblock.xyz/projects/pottery/editingSample.gif" height=300>
+</p>
 
 #### Contacts
 Website **<a href="http://plasticblock.xyz/">plasticblock.xyz</a>**

@@ -47,3 +47,5 @@ sysinfo.txt
 
 # Unity services files
 *.collabignore
+*.sln
+*.csproj

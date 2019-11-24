@@ -14,7 +14,6 @@ For futher information about generation please check `PotteryGenerator.cs` file
 Read XML documentation included in source code files, for further information.
 
 ## Results
-Result
 <p>
 <img src="http://plasticblock.xyz/projects/pottery/example.png" height=300>
 <img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300>

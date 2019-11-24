@@ -1,20 +1,36 @@
 # Pottery
 
-<b>Pottery</b> is runtime pottery editing engine, developed using C# and Unity3D.
+Pottery is runtime pottery editing engine, developed using C# and Unity
 
-Objects created using Pottery engine: 
-<p align="left"><img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300></p>
-Sample object mesh structure:
-<p align="left"><img src="http://plasticblock.xyz/projects/pottery/meshStructure.png" height=300></p>
-Pottery demo editing example:
-<p align="left"><img src="http://plasticblock.xyz/projects/pottery/editingSample.gif" height=300></p>
+#### Description
 
-Read XML documentation included in source code files, for more information.
+Pottery object is array of horizontal circle's radius. Each circle has preset common vertical distance from one to another. Each circle is linked one by one into one solid mesh.
 
-###### CONTACT
-Website: <a href="http://plasticblock.xyz/">plasticblock.xyz</a>
-<br>E-mail: <a href="mailto: contact@plasticblock.xyz">contact@plasticblock.xyz</a>
+Each dot in one line is simply calculated by:
 
-###### LICENSE
+*x = cos(π / faces * index)
+y = sin(π / faces * index)*
+
+For futher information about generation please check `PotteryGenerator.cs` file
+
+Read XML documentation included in source code files, for further information.
+
+#### Example
+Result
+<img src="http://plasticblock.xyz/projects/pottery/example.png" height=300>
+<img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300>
+
+Mesh structure
+<img src="http://plasticblock.xyz/projects/pottery/meshStructure.png" height=300>
+
+Pottery Demo editing example
+<img src="http://plasticblock.xyz/projects/pottery/editingSample.gif" height=300>
+
+#### Contacts
+Website **<a href="http://plasticblock.xyz/">plasticblock.xyz</a>**
+Skype **plasticblock**
+E-mail **<a href="mailto: contact@plasticblock.xyz">contact@plasticblock.xyz</a>**
+
+#### License
 Licensed under GPLv3 license or under special license.
-<br>See the LICENSE file in the project root for futher information.
+See the LICENSE file in the project root for further information.

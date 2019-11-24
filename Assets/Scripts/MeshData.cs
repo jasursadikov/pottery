@@ -1,29 +1,29 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: plasticblock
+// Author: Jasur "vmp1r3" Sadikov
 // Skype: plasticblock, email: contact@plasticblock.xyz
-// Project: Pottery. (https://github.com/plasticblock/Pottery)
+// Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
 using System;
 using UnityEngine;
 
-namespace PlasticBlock.Pottery
+namespace vmp1r3.Pottery
 {
 	/// <summary>
-	/// Contains mesh data.
+	/// Main pottery's mesh data container.
 	/// </summary>
 	[Serializable]
 	public sealed class MeshData : ISerializationCallbackReceiver
 	{
 		/// <summary>
-		/// MeshData. Contains mesh data.
+		/// Main pottery's mesh data container.
 		/// </summary>
 		public MeshData() { }
 
 		/// <summary>
-		/// MeshData. Contains mesh data.
+		/// Main pottery's mesh data container.
 		/// </summary>
 		public MeshData(int faces, int heightSegments, float height)
 		{
@@ -35,7 +35,7 @@ namespace PlasticBlock.Pottery
 			_faces = faces;
 
 			// Creating an instance of matrix.
-			Vertices = new Vertex[faces,heightSegments];
+			Vertices = new Vertex[faces, heightSegments];
 			_radius = new float[heightSegments];
 			_height = height;
 
@@ -64,22 +64,38 @@ namespace PlasticBlock.Pottery
 		/// <summary>
 		/// Array of radius for each segment.
 		/// </summary>
-		public float[] Radius { get { return _radius; } set { _radius = value; } }
+		public float[] Radius
+		{
+			get => _radius;
+			set => _radius = value;
+		}
 
 		/// <summary>
 		/// Distance between two height segments.
 		/// </summary>
-		public float Height { get { return _height; } set { _height = value; } }
+		public float Height
+		{
+			get => _height;
+			set => _height = value;
+		}
 
 		/// <summary>
 		/// Height segments count.
 		/// </summary>
-		public int HeightSegments { get { return _heightSegments; } set { _heightSegments = value; } }
+		public int HeightSegments
+		{
+			get => _heightSegments;
+			set => _heightSegments = value;
+		}
 
 		/// <summary>
 		/// Faces count.
 		/// </summary>
-		public int Faces { get { return _faces; } set { _faces = value; } }
+		public int Faces
+		{
+			get => _faces;
+			set => _faces = value;
+		}
 
 		/// <summary>
 		/// Updating all vertices. Generating by radius.
@@ -96,9 +112,9 @@ namespace PlasticBlock.Pottery
 					var posZ = Mathf.Sin(Mathf.PI * 2f / (Vertices.GetLength(0) - 1) * x);
 
 					var position = new Vector3(posX * Radius[y], posY, posZ * Radius[y]);
-					var normal = new Vector3(posX * (Radius[y] * 2f), posY, posZ * (Radius[y] * 2f));
+					var normal = position.normalized;
 
-					Vertices[x,y] = new Vertex(position, normal, i);
+					Vertices[x, y] = new Vertex(position, normal, i);
 				}
 		}
 
@@ -118,7 +134,7 @@ namespace PlasticBlock.Pottery
 		}
 
 		/// <summary>
-		/// Converting vertices to Vector3 array.
+		/// Converts vertices into <see cref="Vector3"/> array.
 		/// </summary>
 		/// <returns>Converted vertices array.</returns>
 		public Vector3[] VerticesToNormalsArray()

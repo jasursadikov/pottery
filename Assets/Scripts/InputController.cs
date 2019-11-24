@@ -1,36 +1,30 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: plasticblock
+// Author: Jasur "vmp1r3" Sadikov
 // Skype: plasticblock, email: contact@plasticblock.xyz
-// Project: Pottery. (https://github.com/plasticblock/Pottery)
+// Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
 using UnityEngine;
 
 // TODO: change from moving from center to delta.
 
-namespace PlasticBlock.Pottery
+namespace vmp1r3.Pottery
 {
 	/// <summary>
-	/// Input controller. Converts touches and cursor into raycast, and edits your Pottery.
+	/// Input controller. Converts touches and cursor into Raycast, and edits your Pottery.
 	/// </summary>
 	public sealed class InputController : MonoBehaviour
 	{
-		/// <summary>
-		/// Input camera.
-		/// </summary>
-		public new Camera camera;
+		[SerializeField]
+		private Camera _camera;
 
-		/// <summary>
-		/// Pottery.
-		/// </summary>
-		public PotteryGenerator pottery;
+		[SerializeField]
+		private PotteryGenerator _pottery;
 
-		/// <summary>
-		/// Selector. Shows what segment you are selected.
-		/// </summary>
-		public GameObject selector;
+		[SerializeField]
+		private GameObject _selector;
 
 		private Ray _ray;
 
@@ -56,7 +50,7 @@ namespace PlasticBlock.Pottery
 			// For standalone and web.
 
 			// Converting mouse position into ray.
-			_ray = camera.ScreenPointToRay(Input.mousePosition);
+			_ray = _camera.ScreenPointToRay(Input.mousePosition);
 			// Editing on holding mouse button.
 			if (!Input.GetMouseButton(0))
 				_isEnabled = false;
@@ -67,7 +61,7 @@ namespace PlasticBlock.Pottery
 					return;
 
 				// Showing selector.
-				selector.SetActive(true);
+				_selector.SetActive(true);
 
 				// Calculating direction.
 				var delta = _isEnabled ? _hit.point.x - prevPosition.x : 0;
@@ -75,9 +69,9 @@ namespace PlasticBlock.Pottery
 				if (!_isEnabled)
 				{
 					// Finding selected segment. 
-					for (int i = 0; i < pottery.meshData.HeightSegments; i++)
+					for (int i = 0; i < _pottery.meshData.HeightSegments; i++)
 					{
-						if (!(_hit.point.y > i * pottery.Height - pottery.Height / 2) || !(_hit.point.y < (i + 1) * pottery.Height - pottery.Height / 2))
+						if (!(_hit.point.y > i * _pottery.Height - _pottery.Height / 2) || !(_hit.point.y < (i + 1) * _pottery.Height - _pottery.Height / 2))
 							continue;
 
 						_selectedSegment = i;
@@ -87,19 +81,19 @@ namespace PlasticBlock.Pottery
 				}
 
 				// Selector controlling.
-				selector.transform.position = new Vector3(0, pottery.Height * _selectedSegment, 0);
-				selector.transform.localScale = new Vector3(2.25f, pottery.Height / 2f, 2.25f);
+				_selector.transform.position = new Vector3(0, _pottery.Height * _selectedSegment, 0);
+				_selector.transform.localScale = new Vector3(2.25f, _pottery.Height / 2f, 2.25f);
 				
 				// Encapsulating radius[n] array element.
-				pottery.meshData.Radius[_selectedSegment] += delta;
-				pottery.meshData.Radius[_selectedSegment] = pottery.meshData.Radius[_selectedSegment] > 0f ? pottery.meshData.Radius[_selectedSegment] : 0f;
-				pottery.meshData.Radius[_selectedSegment] = pottery.meshData.Radius[_selectedSegment] < 1f ? pottery.meshData.Radius[_selectedSegment] : 1f;
+				_pottery.meshData.Radius[_selectedSegment] += delta;
+				_pottery.meshData.Radius[_selectedSegment] = _pottery.meshData.Radius[_selectedSegment] > 0f ? _pottery.meshData.Radius[_selectedSegment] : 0f;
+				_pottery.meshData.Radius[_selectedSegment] = _pottery.meshData.Radius[_selectedSegment] < 1f ? _pottery.meshData.Radius[_selectedSegment] : 1f;
 
 				return;
 			}
 
-			// Hidding selector.
-			selector.SetActive(false);
+			// Hiding selector.
+			_selector.SetActive(false);
 			_isEnabled = false;
 		}
 

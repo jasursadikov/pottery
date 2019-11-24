@@ -1,18 +1,18 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: plasticblock
+// Author: Jasur "vmp1r3" Sadikov
 // Skype: plasticblock, email: contact@plasticblock.xyz
-// Project: Pottery. (https://github.com/plasticblock/Pottery)
+// Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
 using System;
 using UnityEngine;
 
-namespace PlasticBlock.Pottery
+namespace vmp1r3.Pottery
 {
 	/// <summary>
-	/// Pottery runtime generator.
+	/// Pottery's mesh runtime generator.
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	[RequireComponent(typeof(MeshFilter))]
@@ -30,48 +30,48 @@ namespace PlasticBlock.Pottery
 		private int _faces;
 
 		/// <summary>
-		/// Pottery meshData instance.
+		/// Pottery <see cref="MeshData"/> instance.
 		/// </summary>
 		[HideInInspector]
 		public MeshData meshData;
 
 		/// <summary>
-		/// Mesh filter.
+		/// <see cref="MeshFilter"/> component attached to gameObject.
 		/// </summary>
-		public MeshFilter Filter => _filter ?? (_filter = GetComponent<MeshFilter>());
+		public MeshFilter Filter => _filter ? _filter : _filter = GetComponent<MeshFilter>();
 
 		/// <summary>
-		/// Mesh renderer.
+		/// <see cref="MeshRenderer"/> component attached to gameObject.
 		/// </summary>
-		public MeshRenderer MeshRenderer => _renderer ?? (_renderer = GetComponent<MeshRenderer>());
+		public MeshRenderer MeshRenderer => _renderer ? _renderer : _renderer = GetComponent<MeshRenderer>();
 
 		/// <summary>
 		/// Count of height segments.
 		/// </summary>
 		public int HeightSegments
 		{
-			get { return meshData.HeightSegments; }
+			get => meshData.HeightSegments;
 			set
 			{
 				if (value == meshData.HeightSegments)
 					return;
 
 				_heightSegments = value;
-				Assemble();
+				Build();
 			}
 		}
 
 		/// <summary>
 		/// Faces.
 		/// </summary>
-		public int Faces { get { return meshData.Faces; }
+		public int Faces { get => meshData.Faces;
 			set
 			{
 				if (value == meshData.Faces)
 					return;
 				
 				_faces = value;
-				Assemble();
+				Build();
 			}
 		}
 
@@ -80,19 +80,19 @@ namespace PlasticBlock.Pottery
 		/// </summary>
 		public float Height
 		{
-			get { return meshData.Height; }
+			get => meshData.Height;
 			set
 			{
 				if (value == meshData.Height)
 					return;
 
 				meshData.Height = value; 
-				Assemble();
+				Build();
 			}
 		}
 
 		/// <summary>
-		/// Pot change event.
+		/// On pottery's structure update event.
 		/// </summary>
 		public event Action OnPotteryChange = delegate { };
 
@@ -102,7 +102,7 @@ namespace PlasticBlock.Pottery
 			_faces = 11;
 			_heightSegments = 10;
 			meshData.Height = 0.25f;
-			Assemble();
+			Build();
 
 			Filter.sharedMesh = _mesh;
 		}
@@ -113,9 +113,9 @@ namespace PlasticBlock.Pottery
 		}
 
 		/// <summary>
-		/// Assemble basic components.
+		/// Build basic components.
 		/// </summary>
-		public void Assemble()
+		public void Build()
 		{
 			if (_mesh == null)
 			{
@@ -142,7 +142,7 @@ namespace PlasticBlock.Pottery
 		}
 
 		/// <summary>
-		/// Generating mesh by <seealso cref="MeshData"/>.
+		/// Generating mesh according to <seealso cref="MeshData"/>.
 		/// </summary>
 		private void Generate()
 		{

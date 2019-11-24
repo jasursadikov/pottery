@@ -1,30 +1,26 @@
 ﻿// Licensed under GPLv3 license or under special license
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
-// Author: plasticblock
+// Author: Jasur "vmp1r3" Sadikov
 // Skype: plasticblock, email: contact@plasticblock.xyz
-// Project: Pottery. (https://github.com/plasticblock/Pottery)
+// Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
 // NOTE: placeholder script for Demo
 
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PlasticBlock.Pottery.Demo
+namespace vmp1r3.Pottery.Demo
 {
 	/// <summary>
-	/// Asigns UI elements value to pottery. 
+	/// Assigns UI elements value to pottery. 
 	/// </summary>
 	public sealed class PotteryEditingWindow : MonoBehaviour
 	{
 		[SerializeField]
 		private PotteryGenerator _generator;
-
-		[SerializeField]
-		private MeshRenderer _renderer;
-
+		
 		[Header("Faces")]
 		[SerializeField]
 		private Slider _faces;
@@ -46,13 +42,6 @@ namespace PlasticBlock.Pottery.Demo
 		[SerializeField]
 		private Text _hieghtText;
 
-		[Header("Materials")]
-		[SerializeField]
-		private Dropdown _materialsSelector;
-
-		[SerializeField]
-		private Material[] _materials;
-		
 		// Refreshes values of controller when window is opened again.
 		private void OnEnable()
 		{
@@ -64,9 +53,6 @@ namespace PlasticBlock.Pottery.Demo
 
 			_height.value = _generator.Height;
 			_hieghtText.text = $"Height: {_height.value}";
-
-			_materialsSelector.value = 0;
-			_materialsSelector.options = _materials.Select(material => new Dropdown.OptionData(material.name)).ToList();
 		}
 
 		// UI control elements behaviour.
@@ -83,15 +69,10 @@ namespace PlasticBlock.Pottery.Demo
 			_heightSegmentsText.text = $"Height Segments: {(int) _heightSegments.value}";
 		}
 
-		public void SetHieght()
+		public void SetHeight()
 		{
 			_generator.Height = _height.value;
 			_hieghtText.text = $"Height: {_height.value}";
-		}
-
-		public void SetMaterial()
-		{
-			_renderer.sharedMaterial = _materials[_materialsSelector.value];
 		}
 	}
 }

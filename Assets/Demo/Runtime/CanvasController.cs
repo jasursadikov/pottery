@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 

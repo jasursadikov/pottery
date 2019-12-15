@@ -1,0 +1,15 @@
+{
+    "name": "vmp1r3.Pottery.Demo",
+    "references": [
+        "GUID:e065779c9d51ec8499d72ff0bcf6aa1e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

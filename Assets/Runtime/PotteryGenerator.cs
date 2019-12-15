@@ -2,11 +2,10 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
-using System;
 using UnityEngine;
 
 namespace vmp1r3.Pottery
@@ -14,97 +13,21 @@ namespace vmp1r3.Pottery
 	/// <summary>
 	/// Pottery's mesh runtime generator.
 	/// </summary>
-	[RequireComponent(typeof(Collider))]
 	[RequireComponent(typeof(MeshFilter))]
-	[RequireComponent(typeof(MeshRenderer))]
 	public sealed class PotteryGenerator : MonoBehaviour
 	{
-		private MeshFilter _filter;
-
-		private MeshRenderer _renderer;
-
 		private Mesh _mesh;
-
-		private int _heightSegments;
-		
-		private int _faces;
 
 		/// <summary>
 		/// Pottery <see cref="MeshData"/> instance.
 		/// </summary>
-		[HideInInspector]
 		public MeshData meshData;
-
-		/// <summary>
-		/// <see cref="MeshFilter"/> component attached to gameObject.
-		/// </summary>
-		public MeshFilter Filter => _filter ? _filter : _filter = GetComponent<MeshFilter>();
-
-		/// <summary>
-		/// <see cref="MeshRenderer"/> component attached to gameObject.
-		/// </summary>
-		public MeshRenderer MeshRenderer => _renderer ? _renderer : _renderer = GetComponent<MeshRenderer>();
-
-		/// <summary>
-		/// Count of height segments.
-		/// </summary>
-		public int HeightSegments
-		{
-			get => meshData.HeightSegments;
-			set
-			{
-				if (value == meshData.HeightSegments)
-					return;
-
-				_heightSegments = value;
-				Build();
-			}
-		}
-
-		/// <summary>
-		/// Faces.
-		/// </summary>
-		public int Faces { get => meshData.Faces;
-			set
-			{
-				if (value == meshData.Faces)
-					return;
-				
-				_faces = value;
-				Build();
-			}
-		}
-
-		/// <summary>
-		/// Distance between two height segments.
-		/// </summary>
-		public float Height
-		{
-			get => meshData.Height;
-			set
-			{
-				if (value == meshData.Height)
-					return;
-
-				meshData.Height = value; 
-				Build();
-			}
-		}
-
-		/// <summary>
-		/// On pottery's structure update event.
-		/// </summary>
-		public event Action OnPotteryChange = delegate { };
 
 		private void Awake()
 		{
-			// Setting default values.
-			_faces = 11;
-			_heightSegments = 10;
-			meshData.Height = 0.25f;
-			Build();
+			GetComponent<MeshFilter>().sharedMesh = _mesh = new Mesh { name = "Pottery" };
 
-			Filter.sharedMesh = _mesh;
+			Build();
 		}
 
 		private void Update()
@@ -117,28 +40,20 @@ namespace vmp1r3.Pottery
 		/// </summary>
 		public void Build()
 		{
-			if (_mesh == null)
-			{
-				_mesh = new Mesh {name = "Procedural mesh"};
-				_mesh.MarkDynamic();
-			}
-			else
-			{
-				_mesh.Clear();
-			}
+			_mesh.Clear();
 
 			var prevBody = meshData;
 
-			meshData = new MeshData(_faces, _heightSegments, prevBody.Height);
+			meshData = meshData == null ? new MeshData() : new MeshData(meshData.faces, meshData.heightSegments, meshData.height);
 
 			if (prevBody == null)
 				return;
 
-			if (HeightSegments == prevBody.HeightSegments)
-				meshData.Radius = prevBody.Radius;
+			if (meshData.heightSegments == prevBody.heightSegments)
+				meshData.radius = prevBody.radius;
 			else
-				for (int index = 0; index < meshData.Radius.Length; index++)
-					meshData.Radius[index] = 0.1f;
+				for (int index = 0; index < meshData.radius.Length; index++)
+					meshData.radius[index] = 0.1f;
 		}
 
 		/// <summary>
@@ -179,12 +94,11 @@ namespace vmp1r3.Pottery
 			_mesh.triangles = triangles;
 			_mesh.uv = uvs;
 			_mesh.normals = meshData.VerticesToNormalsArray();
-			
-			OnPotteryChange();
 		}
 
 #if DEBUG
 
+		// ReSharper disable Unity.InefficientPropertyAccess
 		private void OnDrawGizmosSelected()
 		{
 			if (_mesh == null)
@@ -192,7 +106,6 @@ namespace vmp1r3.Pottery
 
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireMesh(_mesh, transform.position, transform.rotation, transform.localScale);
-
 			Gizmos.color = Color.cyan;
 
 			foreach (var vertex in meshData.Vertices)
@@ -208,6 +121,7 @@ namespace vmp1r3.Pottery
 				Gizmos.DrawLine(start, normal);
 			}
 		}
+		// ReSharper restore Unity.InefficientPropertyAccess
 
 #endif
 	}

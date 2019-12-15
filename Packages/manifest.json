@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.render-pipelines.universal": "7.1.5",
+    "com.unity.render-pipelines.universal": "7.1.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.director": "1.0.0",

@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
@@ -40,39 +40,39 @@ namespace vmp1r3.Pottery.Demo
 		private Slider _height;
 
 		[SerializeField]
-		private Text _hieghtText;
+		private Text _heightText;
 
 		// Refreshes values of controller when window is opened again.
 		private void OnEnable()
 		{
-			_faces.value = _generator.Faces;
+			_faces.value = _generator.meshData.faces;
 			_facesText.text = $"Faces: {(int) _faces.value}";
 
-			_heightSegments.value = _generator.HeightSegments;
+			_heightSegments.value = _generator.meshData.heightSegments;
 			_heightSegmentsText.text = $"Height Segments: {(int) _heightSegments.value}";
 
-			_height.value = _generator.Height;
-			_hieghtText.text = $"Height: {_height.value}";
+			_height.value = _generator.meshData.height;
+			_heightText.text = $"Height: {_height.value}";
 		}
 
 		// UI control elements behaviour.
 
 		public void SetFaces()
 		{
-			_generator.Faces = (int) _faces.value;
+			_generator.meshData.faces = (int) _faces.value;
 			_facesText.text = $"Faces: {(int) _faces.value}";
 		}
 		
 		public void SetHeightSegments()
 		{
-			_generator.HeightSegments = (int) _heightSegments.value;
+			_generator.meshData.heightSegments = (int) _heightSegments.value;
 			_heightSegmentsText.text = $"Height Segments: {(int) _heightSegments.value}";
 		}
 
 		public void SetHeight()
 		{
-			_generator.Height = _height.value;
-			_hieghtText.text = $"Height: {_height.value}";
+			_generator.meshData.height = _height.value;
+			_heightText.text = $"Height: {_height.value}";
 		}
 	}
 }

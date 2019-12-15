@@ -13,6 +13,10 @@ For futher information about generation please check `PotteryGenerator.cs` file
 
 Read XML documentation included in source code files, for further information.
 
+## Install
+
+To use this project as Unity Package, get git link of this repository from Clone section and add `#upm` postfix in Package Manager window.
+
 ## Results
 <p>
 <img src="http://plasticblock.xyz/projects/pottery/example.png" height=300>

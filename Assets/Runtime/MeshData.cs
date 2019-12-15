@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
@@ -12,18 +12,18 @@ using UnityEngine;
 namespace vmp1r3.Pottery
 {
 	/// <summary>
-	/// Main pottery's mesh data container.
+	/// Pottery data container.
 	/// </summary>
 	[Serializable]
 	public sealed class MeshData : ISerializationCallbackReceiver
 	{
 		/// <summary>
-		/// Main pottery's mesh data container.
+		/// Pottery data container.
 		/// </summary>
 		public MeshData() { }
 
 		/// <summary>
-		/// Main pottery's mesh data container.
+		/// Pottery data container.
 		/// </summary>
 		public MeshData(int faces, int heightSegments, float height)
 		{
@@ -31,87 +31,47 @@ namespace vmp1r3.Pottery
 			if (faces <= 1 || heightSegments <= 1)
 				throw new IndexOutOfRangeException();
 
-			_heightSegments = heightSegments;
-			_faces = faces;
+			this.heightSegments = heightSegments;
+			this.faces = faces;
+			this.height = height;
 
 			// Creating an instance of matrix.
 			Vertices = new Vertex[faces, heightSegments];
-			_radius = new float[heightSegments];
-			_height = height;
+			radius = new float[heightSegments];
 
 			// Setting minimal radius.
-			for (int index = 0; index < Radius.Length; index++)
-				Radius[index] = 1f;
+			for (int index = 0; index < radius.Length; index++)
+				radius[index] = 1f;
 		}
 
-		[SerializeField]
-		private float[] _radius;
+		public float[] radius;
 
-		[SerializeField]
-		private float _height;
+		public float height;
 
-		[SerializeField]
-		private int _heightSegments;
+		public int heightSegments;
 
-		[SerializeField]
-		private int _faces;
+		public int faces;
 
 		/// <summary>
 		/// Vertices 2D array. Contains all vertices data.
 		/// </summary>
 		public Vertex[,] Vertices { get; private set; }
-
-		/// <summary>
-		/// Array of radius for each segment.
-		/// </summary>
-		public float[] Radius
-		{
-			get => _radius;
-			set => _radius = value;
-		}
-
-		/// <summary>
-		/// Distance between two height segments.
-		/// </summary>
-		public float Height
-		{
-			get => _height;
-			set => _height = value;
-		}
-
-		/// <summary>
-		/// Height segments count.
-		/// </summary>
-		public int HeightSegments
-		{
-			get => _heightSegments;
-			set => _heightSegments = value;
-		}
-
-		/// <summary>
-		/// Faces count.
-		/// </summary>
-		public int Faces
-		{
-			get => _faces;
-			set => _faces = value;
-		}
-
+		
 		/// <summary>
 		/// Updating all vertices. Generating by radius.
 		/// </summary>
 		public void UpdateVertices()
 		{
-			// Filling vertices 2D array (Matrix.)
-			for (int i = 0, y = 0; y < Vertices.GetLength(1); y++)
-				for (int x = 0; x < Vertices.GetLength(0); i++, x++)
+			// Filling vertices 2D array
+			for (int i = 0, y = 0; y < heightSegments; y++)
+				for (int x = 0; x < faces; i++, x++)
 				{
 					// Building circle by using Cos and Sin, for posX and posZ.
-					var posX = Mathf.Cos(Mathf.PI * 2f / (Vertices.GetLength(0) - 1) * x);
-					var posY = y * Height;
-					var posZ = Mathf.Sin(Mathf.PI * 2f / (Vertices.GetLength(0) - 1) * x);
+					var posX = Mathf.Cos(Mathf.PI * 2f / (faces - 1) * x);
+					var posY = y * height;
+					var posZ = Mathf.Sin(Mathf.PI * 2f / (faces - 1) * x);
 
-					var position = new Vector3(posX * Radius[y], posY, posZ * Radius[y]);
+					var position = new Vector3(posX * radius[y], posY, posZ * radius[y]);
 					var normal = position.normalized;
 
 					Vertices[x, y] = new Vertex(position, normal, i);
@@ -125,9 +85,9 @@ namespace vmp1r3.Pottery
 		public Vector3[] VerticesToPositionArray()
 		{
 			// Getting value from vertices[x, y].position.
-			Vector3[] result = new Vector3[Vertices.GetLength(1) * Vertices.GetLength(0)];
-			for (int i = 0, y = 0; y < Vertices.GetLength(1); y++)
-				for (int x = 0; x < Vertices.GetLength(0); i++, x++)
+			Vector3[] result = new Vector3[heightSegments * faces];
+			for (int i = 0, y = 0; y < heightSegments; y++)
+				for (int x = 0; x < faces; i++, x++)
 					result[i] = Vertices[x, y].position;
 
 			return result;
@@ -140,10 +100,10 @@ namespace vmp1r3.Pottery
 		public Vector3[] VerticesToNormalsArray()
 		{
 			// Getting value from vertices[x, y].normal. 
-			Vector3[] result = new Vector3[Vertices.GetLength(1) * Vertices.GetLength(0)];
-			for (int i = 0, y = 0; y < Vertices.GetLength(1); y++)
-				for (int x = 0; x < Vertices.GetLength(0); i++, x++)
-					result[i] = Vertices[x, y].normal;
+			Vector3[] result = new Vector3[heightSegments * faces];
+			for (int i = 0, y = 0; y < heightSegments; y++)
+				for (int x = 0; x < faces; i++, x++)
+					result[i] = Vertices[x, y].position + Vertices[x, y].normal;
 
 			return result;
 		}
@@ -154,7 +114,7 @@ namespace vmp1r3.Pottery
 		/// <inheritdoc />
 		void ISerializationCallbackReceiver.OnAfterDeserialize()
 		{
-			Vertices = new Vertex[_faces, _heightSegments];
+			Vertices = new Vertex[faces, heightSegments];
 			UpdateVertices();
 		}
 	}

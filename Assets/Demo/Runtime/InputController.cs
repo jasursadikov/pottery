@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
@@ -10,10 +10,10 @@ using UnityEngine;
 
 // TODO: change from moving from center to delta.
 
-namespace vmp1r3.Pottery
+namespace vmp1r3.Pottery.Demo
 {
 	/// <summary>
-	/// Input controller. Converts touches and cursor into Raycast, and edits your Pottery.
+	/// Controls pottery from player's input
 	/// </summary>
 	public sealed class InputController : MonoBehaviour
 	{
@@ -39,7 +39,7 @@ namespace vmp1r3.Pottery
 			var prevPosition = _hit.point;
 
 #if UNITY_ANDROID
-			// For mobile platforms.
+			// for mobile platforms
 			if (Input.touchCount == 0)
 			{
 				_isEnabled = false;
@@ -47,11 +47,11 @@ namespace vmp1r3.Pottery
 			}
 			_ray = camera.ScreenPointToRay(Input.touches[0].position);
 #else
-			// For standalone and web.
+			// for standalone and web
 
-			// Converting mouse position into ray.
+			// converting mouse position into ray
 			_ray = _camera.ScreenPointToRay(Input.mousePosition);
-			// Editing on holding mouse button.
+			// editing on holding mouse button
 			if (!Input.GetMouseButton(0))
 				_isEnabled = false;
 #endif
@@ -60,18 +60,18 @@ namespace vmp1r3.Pottery
 				if (_hit.collider.gameObject.layer == 5)
 					return;
 
-				// Showing selector.
+				// showing selector
 				_selector.SetActive(true);
 
-				// Calculating direction.
+				// calculating direction
 				var delta = _isEnabled ? _hit.point.x - prevPosition.x : 0;
 
 				if (!_isEnabled)
 				{
-					// Finding selected segment. 
-					for (int i = 0; i < _pottery.meshData.HeightSegments; i++)
+					// finding selected segment 
+					for (int i = 0; i < _pottery.meshData.heightSegments; i++)
 					{
-						if (!(_hit.point.y > i * _pottery.Height - _pottery.Height / 2) || !(_hit.point.y < (i + 1) * _pottery.Height - _pottery.Height / 2))
+						if (!(_hit.point.y > i * _pottery.meshData.height - _pottery.meshData.height / 2) || !(_hit.point.y < (i + 1) * _pottery.meshData.height - _pottery.meshData.height / 2))
 							continue;
 
 						_selectedSegment = i;
@@ -80,19 +80,16 @@ namespace vmp1r3.Pottery
 					_isEnabled = true;
 				}
 
-				// Selector controlling.
-				_selector.transform.position = new Vector3(0, _pottery.Height * _selectedSegment, 0);
-				_selector.transform.localScale = new Vector3(2.25f, _pottery.Height / 2f, 2.25f);
+				_selector.transform.position = new Vector3(0, _pottery.meshData.height * _selectedSegment, 0);
+				_selector.transform.localScale = new Vector3(2.25f, _pottery.meshData.height / 2f, 2.25f);
 				
-				// Encapsulating radius[n] array element.
-				_pottery.meshData.Radius[_selectedSegment] += delta;
-				_pottery.meshData.Radius[_selectedSegment] = _pottery.meshData.Radius[_selectedSegment] > 0f ? _pottery.meshData.Radius[_selectedSegment] : 0f;
-				_pottery.meshData.Radius[_selectedSegment] = _pottery.meshData.Radius[_selectedSegment] < 1f ? _pottery.meshData.Radius[_selectedSegment] : 1f;
+				_pottery.meshData.radius[_selectedSegment] += delta;
+				_pottery.meshData.radius[_selectedSegment] = Mathf.Clamp01(_pottery.meshData.radius[_selectedSegment]);
 
 				return;
 			}
 
-			// Hiding selector.
+			// hiding selector
 			_selector.SetActive(false);
 			_isEnabled = false;
 		}

@@ -1,0 +1,23 @@
+{
+	"name": "com.vmp1r3.pottery",
+	"version": "1.0.0",
+	"displayName": "Pottery",
+	"description": "3D pottery mesh procedural generation package.",
+	"unity": "2019.3",
+	"dependencies": {
+		"com.unity.ugui": "1.0.0",
+		"com.unity.render-pipelines.universal": "7.1.5"
+	},
+	"author": {
+		"name": "Jasur \"vmp1r3\" Sadikov",
+		"email": "contact@plasticblock.xyz",
+		"url": "http://plasticblock.xyz/"
+	},
+	"keywords": [
+		"3d",
+		"Meshes",
+		"Pottery",
+		"Procedural Generation",
+		"Generation"
+	]
+}

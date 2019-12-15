@@ -2,7 +2,7 @@
 // See the LICENSE file in the project root for more information
 // -----------------------------------------------------------------------
 // Author: Jasur "vmp1r3" Sadikov
-// Skype: plasticblock, email: contact@plasticblock.xyz
+// E-mail: contact@plasticblock.xyz
 // Project: Pottery. (https://github.com/vmp1r3/Pottery)
 // ----------------------------------------------------------------------- 
 
@@ -19,7 +19,7 @@ namespace vmp1r3.Pottery.Demo
 
 		private void Update()
 		{
-			transform.Rotate(Vector3.up * _speed * Time.deltaTime);
+			transform.Rotate(Time.deltaTime * _speed * Vector3.up);
 		}
 	}
 }

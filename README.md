@@ -19,24 +19,23 @@ To use this project as Unity Package, get git link of this repository from Clone
 
 ## Results
 <p>
-<img src="http://plasticblock.xyz/projects/pottery/example.png" height=300>
-<img src="http://plasticblock.xyz/projects/pottery/objectsExample.png" height=300>
+<img src="http://sadikoff.com/projects/pottery/example.png" height=300>
+<img src="http://sadikoff.com/projects/pottery/objectsExample.png" height=300>
 </p>
 
 Mesh structure
 <p>
-<img src="http://plasticblock.xyz/projects/pottery/meshStructure.png" height=300>
+<img src="http://sadikoff.com/projects/pottery/meshStructure.png" height=300>
 </p>
 
 Pottery Demo editing example
 <p>
-<img src="http://plasticblock.xyz/projects/pottery/editingSample.gif" height=300>
+<img src="http://sadikoff.com/projects/pottery/editingSample.gif" height=300>
 </p>
 
 ## Contacts
-Website **<a href="http://plasticblock.xyz/">plasticblock.xyz</a>**
-<br>Skype **plasticblock**
-<br>E-mail **<a href="mailto: contact@plasticblock.xyz">contact@plasticblock.xyz</a>**
+Website **<a href="http://sadikoff.com/">sadikoff.com</a>**
+<br>E-mail **<a href="mailto: jasur@sadikoff.com">jasur@sadikoff.com</a>**
 
 ## License
 Licensed under GPLv3 license or under special license.

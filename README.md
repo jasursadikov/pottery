@@ -10,7 +10,7 @@ Shape (pottery) is simply array of radiuses (rings).
 <br>**x** = cos(π / faces * index)
 <br>**y** = sin(π / faces * index)
 
-For more information check `PotteryGenerator.cs.cs` file
+For more information check `PotteryGenerator.cs` file
 
 Source files contians XML documentation if you want to get better understanding of process.
 

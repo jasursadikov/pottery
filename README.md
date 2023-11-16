@@ -1,8 +1,8 @@
-<h1 align="center">🍸 Pottery 🍷</h1>
+# Pottery 🍯
 
-Pottery is runtime 3D shapes generator similar to lathe.  
+Pottery is runtime lathe 3D shapes generator.  
 
-### How it works
+## How it works
 Shape is created which simply array of rings placed on top of each another by Y axis (vertically).  
 All rings have radius. Rings share the same amount of edges set in shape.  
 Mesh is created by shape height, ring radius and edges count.  

@@ -1,15 +1,12 @@
 # Pottery 🍯
 
-Pottery is runtime lathe 3D shapes generator.  
+Pottery is a runtime lathe 3D shapes generator.
 
 ## How it works
-Shape is created which simply array of rings placed on top of each another by Y axis (vertically).  
-All rings have radius. Rings share the same amount of edges set in shape.  
-Mesh is created by shape height, ring radius and edges count.  
-All vertices are calculated using simple trigonometric formula where:  
-**x** = cos(π / faces * index)  
-**y** = sin(π / faces * index)  
-**z** = height / rignsCount * ringIndex
+A shape is created as an array of rings placed on top of each other along the Y-axis (vertically). All rings have a radius, and they share the same number of edges set in the shape. The mesh is created based on the shape's height, ring radius, and edge count. All vertices are calculated using a simple trigonometric formula where:
+- x = cos(π / faces * index)
+- y = sin(π / faces * index)
+- z = height / ringsCount * ringIndex
 
 <p>
 <img src="https://user-images.githubusercontent.com/14846427/124443152-1bff3b80-dd86-11eb-95b3-d9c81fc71a26.png" height=240>

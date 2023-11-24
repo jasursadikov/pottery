@@ -1,4 +1,4 @@
-# Pottery 🍯
+# Pottery
 
 Pottery is a runtime lathe 3D shapes generator.
 

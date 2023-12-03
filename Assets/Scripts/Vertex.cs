@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace vmp1r3.Pottery
+namespace JasurSadikov.Pottery
 {
 	public struct Vertex
 	{

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace vmp1r3.Pottery
+namespace JasurSadikov.Pottery
 {
 	[RequireComponent(typeof(MeshFilter))]
 	public sealed class Lathe : MonoBehaviour
@@ -10,8 +10,8 @@ namespace vmp1r3.Pottery
 		public int ringsCount;
 		public float[] rings;
 
-		private Mesh mesh;
-		private Shape shape;
+		Mesh mesh;
+		Shape shape;
 
 		void Awake()
 		{
@@ -19,15 +19,14 @@ namespace vmp1r3.Pottery
 			GetComponent<MeshFilter>().sharedMesh = mesh = new Mesh();
 			mesh.MarkDynamic();
 		}
-
 		void Update()
 		{
 			shape.UpdateVertices();
 			
 			mesh.vertices = shape.VerticesToPositionArray();
 
-			var triangles = new int[6 * shape.vertices.GetLength(0) * shape.vertices.GetLength(1)];
-			var uvs = new Vector2[shape.vertices.GetLength(0) * shape.vertices.GetLength(1)];
+			int[] triangles = new int[6 * shape.vertices.GetLength(0) * shape.vertices.GetLength(1)];
+			Vector2[] uvs = new Vector2[shape.vertices.GetLength(0) * shape.vertices.GetLength(1)];
 
 			for (int t = 0, y = 0; y < shape.vertices.GetLength(1) - 1; y++)
 				for (int x = 0; x < shape.vertices.GetLength(0) - 1; x++)
@@ -45,8 +44,8 @@ namespace vmp1r3.Pottery
 			for (int t = 0, y = 0; y < shape.vertices.GetLength(1); y++)
 				for (int x = 0; x < shape.vertices.GetLength(0); x++, t++)
 				{
-					var uvX = 1f / shape.vertices.GetLength(0) * x;
-					var uvY = 1f / shape.vertices.GetLength(1) * y;
+					float uvX = 1f / shape.vertices.GetLength(0) * x;
+					float uvY = 1f / shape.vertices.GetLength(1) * y;
 
 					uvs[t] = new Vector2(uvX, uvY);
 				}
@@ -59,7 +58,6 @@ namespace vmp1r3.Pottery
 		}
 
 #if UNITY_EDITOR
-
 		void OnDrawGizmosSelected()
 		{
 			if (mesh == null)
@@ -70,10 +68,9 @@ namespace vmp1r3.Pottery
 			Gizmos.DrawWireMesh(mesh);
 			Gizmos.color = Color.cyan;
 
-			foreach (var vertex in shape.vertices)
+			foreach (Vertex vertex in shape.vertices)
 				Gizmos.DrawSphere(vertex.position, 0.015f);
 		}
-		
 #endif
 	}
 }

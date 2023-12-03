@@ -1,16 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
-namespace vmp1r3.Pottery
+namespace JasurSadikov.Pottery
 {
 	public sealed class Shape
 	{
-		private readonly float[] rings;
-		private readonly float ringHeight;
-		private readonly int ringsCount;
-		private readonly int faces;
-		
 		public readonly Vertex[,] vertices;
+
+		readonly float[] rings;
+		readonly float ringHeight;
+		readonly int ringsCount;
+		readonly int faces;
 
 		public Shape(int faces, int ringsCount, float ringHeight, float[] rings)
 		{
@@ -25,27 +25,25 @@ namespace vmp1r3.Pottery
 			
 			vertices = new Vertex[faces, ringsCount];
 		}
-		
 		public void UpdateVertices()
 		{
 			for (int i = 0, y = 0; y < ringsCount; y++)
 				for (int x = 0; x < faces; i++, x++)
 				{
 					// Building circle by using Cos and Sin, for posX and posZ.
-					var posX = Mathf.Cos(Mathf.PI * 2f / (faces - 1) * x);
-					var posY = y * ringHeight;
-					var posZ = Mathf.Sin(Mathf.PI * 2f / (faces - 1) * x);
+					float posX = Mathf.Cos(Mathf.PI * 2f / (faces - 1) * x);
+					float posY = y * ringHeight;
+					float posZ = Mathf.Sin(Mathf.PI * 2f / (faces - 1) * x);
 
-					var position = new Vector3(posX * rings[y], posY, posZ * rings[y]);
-					var normal = position.normalized;
+					Vector3 position = new(posX * rings[y], posY, posZ * rings[y]);
+					Vector3 normal = new Vector3(position.x, 0, position.z).normalized;
 
 					vertices[x, y] = new Vertex(position, normal, i);
 				}
 		}
-
 		public Vector3[] VerticesToPositionArray()
 		{
-			var result = new Vector3[ringsCount * faces];
+			Vector3[] result = new Vector3[ringsCount * faces];
 			
 			for (int i = 0, y = 0; y < ringsCount; y++)
 				for (int x = 0; x < faces; i++, x++)
@@ -53,14 +51,13 @@ namespace vmp1r3.Pottery
 
 			return result;
 		}
-		
 		public Vector3[] VerticesToNormalsArray()
 		{
-			var result = new Vector3[ringsCount * faces];
+			Vector3[] result = new Vector3[ringsCount * faces];
 			
 			for (int i = 0, y = 0; y < ringsCount; y++)
 				for (int x = 0; x < faces; i++, x++)
-					result[i] = vertices[x, y].position + vertices[x, y].normal;
+					result[i] = vertices[x, y].normal;
 
 			return result;
 		}

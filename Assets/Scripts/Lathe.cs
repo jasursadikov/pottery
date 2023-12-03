@@ -56,7 +56,6 @@ namespace JasurSadikov.Pottery
 
 			mesh.MarkModified();
 		}
-
 #if UNITY_EDITOR
 		void OnDrawGizmosSelected()
 		{

@@ -1,0 +1,13 @@
+{
+	"name": "com.jasursadikov.pottery",
+	"version": "1.0.0",
+	"displayName": "Pottery",
+	"description": "Make pots in runtime in Unity.",
+	"unity": "2023.1",
+	"dependencies": {},
+	"author": {
+		"name": "Jasur Sadikov",
+		"email": "jasur@sadikoff.com",
+		"url": "https://github.com/jasursadikov/pottery"
+	}
+}

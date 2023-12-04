@@ -1,0 +1,16 @@
+{
+    "name": "JasurSadikov.Pottery.Sample",
+    "rootNamespace": "JasurSadikov.Pottery",
+    "references": [
+        "JasurSadikov.Pottery"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,6 +1,6 @@
 # Pottery
 
-Pottery is a runtime lathe 3D shapes generator made on Unity.
+Pottery is a runtime pots editor made in Unity.
 
 <img src="Samples~/Images/demo.gif" height=360>
 
